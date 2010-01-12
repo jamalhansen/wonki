@@ -1,6 +1,6 @@
 = wonki
 
-Description goes here.
+A simple Rack and Git based wiki like thing
 
 == Note on Patches/Pull Requests
  
