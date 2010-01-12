@@ -22,7 +22,7 @@ module Wonki
       rescue Wonki::PageNotFound
 	response_body = "Page Not Found"
 	status = 404
-      rescue e
+      rescue RuntimeError => e
 	response_body = "Server Error: #{e.message}\r\n#{e.stack_trace}"
 	status = 500
       end
