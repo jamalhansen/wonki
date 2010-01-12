@@ -10,6 +10,8 @@ begin
     gem.email = "jamal.hansen@gmail.com"
     gem.homepage = "http://github.com/rubyyot/wonki"
     gem.authors = ["rubyyot"]
+    gem.add_dependency 'grit'
+    gem.add_dependency 'flannel'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -20,7 +22,7 @@ end
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
+  test.pattern = 'test/**/*_test.rb'
   test.verbose = true
 end
 
