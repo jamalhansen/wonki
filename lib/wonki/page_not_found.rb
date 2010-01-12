@@ -1,5 +1,5 @@
-module Rubyyot
-  class PageNotFound < StandardError
+module Wonki
+  class PageNotFound < RuntimeError
 
   end
 end

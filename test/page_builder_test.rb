@@ -5,7 +5,7 @@ require 'lib/wonki/page_not_found'
 class PageBuilderTest < Test::Unit::TestCase
   context "Building a Page" do
     setup do
-      @builder = Rubyyot::PageBuilder.new("~/working/rubyyot-wiki-test")
+      @builder = Wonki::PageBuilder.new("~/working/rubyyot-wiki-test")
     end
     
     should "include the location" do
@@ -33,7 +33,7 @@ class PageBuilderTest < Test::Unit::TestCase
 	begin
 	  @builder.find("walla-walla-bing-bang")
 	  assert false, "Should have thrown a page not found exception"
-	rescue Rubyyot::PageNotFound
+	rescue Wonki::PageNotFound
 	  assert true
 	end
       end

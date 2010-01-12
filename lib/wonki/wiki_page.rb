@@ -1,7 +1,7 @@
 require 'wonki/page_builder'
 require 'wonki/page_not_found'
 
-module Rubyyot
+module Wonki
   class WikiPage
     def initialize(repo_path)
       @repo_path = repo_path
@@ -14,16 +14,16 @@ module Rubyyot
     
     def build_response(path)
       path = "/home" if path == "/"
-      builder = Rubyyot::PageBuilder.new(@repo_path)
+      builder = Wonki::PageBuilder.new(@repo_path)
             
       begin
 	response_body = builder.build(path)
 	status = 200
-      rescue Rubyyot::PageNotFound
+      rescue Wonki::PageNotFound
 	response_body = "Page Not Found"
 	status = 404
-      rescue 
-	response_body = "Server Error"
+      rescue e
+	response_body = "Server Error: #{e.message}\r\n#{e.stack_trace}"
 	status = 500
       end
       

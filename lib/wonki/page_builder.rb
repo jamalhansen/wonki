@@ -2,7 +2,7 @@ require 'mime/types'
 require 'grit'
 require 'flannel'
 
-module Rubyyot
+module Wonki
   class PageBuilder
     def initialize(repo_path)
       @repo_path = repo_path
@@ -17,7 +17,7 @@ module Rubyyot
     def find(name)
       repository = Grit::Repo.new(@repo_path)
       blob = (repository.tree/name)
-      raise Rubyyot::PageNotFound.new if blob.nil?
+      raise Wonki::PageNotFound.new if blob.nil?
       blob.data
     end
   end
