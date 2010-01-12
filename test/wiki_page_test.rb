@@ -20,6 +20,10 @@ class WikiPageTest < Test::Unit::TestCase
     should "set content language" do
       assert_equal(@headers["Content-Language"], 'en')
     end
+    
+    should "set last modified" do
+      assert_equal(@headers["Last-Modified"], "Tue, 29 Dec 2009 06:56:38 GMT")
+    end
   end
   
   context "PageNotFound" do

@@ -16,8 +16,12 @@ module Wonki
       path = "/home" if path == "/"
       builder = Wonki::PageBuilder.new(@repo_path)
             
+      headers = {"Content-Type" => "text/html", "Content-Language" => "en"}
+      
       begin
-	response_body = builder.build(path)
+	git_data = builder.build(path)
+	response_body = git_data[:content]
+	headers["Last-Modified"] = git_data[:last_modified].httpdate
 	status = 200
       rescue Wonki::PageNotFound
 	response_body = "Page Not Found"
@@ -27,8 +31,6 @@ module Wonki
 	status = 500
       end
       
-      headers = {"Content-Type" => "text/html", "Content-Language" => "en"}
-
       [status, headers, response_body] 
     end
   end   
