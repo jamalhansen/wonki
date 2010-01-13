@@ -23,6 +23,7 @@ module Wonki
 	response_body = git_data[:content]
 	headers["Last-Modified"] = git_data[:last_modified].httpdate
 	headers["Etag"] = Digest::MD5.hexdigest(git_data[:content])
+	headers["Cache-Control"] = "max-age=300, public" 
 	status = 200
       rescue Wonki::PageNotFound
 	response_body = "Page Not Found"

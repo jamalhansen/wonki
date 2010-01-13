@@ -28,6 +28,10 @@ class WikiPageTest < Test::Unit::TestCase
     should "set etag" do
       assert_not_nil @headers['Etag']
     end
+    
+    should "set cache control" do
+      assert_equal(@headers["Cache-Control"], "max-age=300, public")
+    end
   end
   
   context "PageNotFound" do
