@@ -3,7 +3,8 @@ require 'wonki/page_not_found'
 
 module Wonki
   class WikiPage
-    def initialize(repo_path)
+    def initialize(repo_path, max_age=nil)
+      @max_age = max_age
       @repo_path = repo_path
     end
     
@@ -23,7 +24,7 @@ module Wonki
 	response_body = git_data[:content]
 	headers["Last-Modified"] = git_data[:last_modified].httpdate
 	headers["Etag"] = Digest::MD5.hexdigest(git_data[:content])
-	headers["Cache-Control"] = "max-age=300, public" 
+	headers["Cache-Control"] = set_cache_control
 	status = 200
       rescue Wonki::PageNotFound
 	response_body = "Page Not Found"
@@ -34,6 +35,11 @@ module Wonki
       end
       
       [status, headers, response_body] 
+    end
+    
+    def set_cache_control
+      return "max-age=#{@max_age}, public" if @max_age
+      "public"
     end
   end   
 end
