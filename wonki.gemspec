@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{wonki}
-  s.version = "0.0.6"
+  s.version = "0.0.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["rubyyot"]
-  s.date = %q{2010-01-12}
+  s.date = %q{2010-01-13}
   s.description = %q{a Rack and Git based wiki like thing}
   s.email = %q{jamal.hansen@gmail.com}
   s.extra_rdoc_files = [
@@ -24,11 +24,11 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "lib/wonki.rb",
-     "lib/wonki/page_builder.rb",
      "lib/wonki/page_not_found.rb",
+     "lib/wonki/storage.rb",
      "lib/wonki/wiki_page.rb",
      "test/helper.rb",
-     "test/page_builder_test.rb",
+     "test/storage_test.rb",
      "test/wiki_page_test.rb",
      "wonki.gemspec"
   ]
@@ -39,8 +39,8 @@ Gem::Specification.new do |s|
   s.summary = %q{a simple Rack and Git based wiki like thing}
   s.test_files = [
     "test/wiki_page_test.rb",
-     "test/helper.rb",
-     "test/page_builder_test.rb"
+     "test/storage_test.rb",
+     "test/helper.rb"
   ]
 
   if s.respond_to? :specification_version then
