@@ -24,6 +24,10 @@ class WikiPageTest < Test::Unit::TestCase
     should "set last modified" do
       assert_equal(@headers["Last-Modified"], "Tue, 29 Dec 2009 06:56:38 GMT")
     end
+    
+    should "set etag" do
+      assert_not_nil @headers['Etag']
+    end
   end
   
   context "PageNotFound" do
