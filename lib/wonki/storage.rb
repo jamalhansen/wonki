@@ -1,9 +1,8 @@
 require 'mime/types'
 require 'grit'
-require 'flannel'
 
 module Wonki
-  class PageBuilder
+  class Storage
     def initialize(repo_path)
       @repo_path = repo_path
       @repository = Grit::Repo.new(@repo_path)
@@ -13,8 +12,7 @@ module Wonki
       route_name = route[1..-1] # strip leading slash
       data = find(route_name)
       mod_date = get_mod_date(route_name)
-      content = %Q{<h2 id="location">#{route_name}</h2><div id="content">#{Flannel.quilt(data)}</div>}
-      {:content => content, :last_modified => mod_date}
+      {:content => data, :last_modified => mod_date, :route_name => route_name}
     end
     
     def find(name)
@@ -24,7 +22,7 @@ module Wonki
     end
     
     def get_mod_date(name)
-      @repository.commits.first.committed_date
+      @repository.commits.first.committed_date  # date of the last commit to the repo.
     end
   end
 end

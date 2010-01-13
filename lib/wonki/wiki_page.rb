@@ -1,10 +1,11 @@
-require 'wonki/page_builder'
+require 'wonki/storage'
 require 'wonki/page_not_found'
+require 'flannel'
 
 module Wonki
   class WikiPage
-    def initialize(repo_path, max_age=nil)
-      @max_age = max_age
+    def initialize(repo_path, cache_control=nil)
+      @cache_control = cache_control
       @repo_path = repo_path
     end
     
@@ -15,16 +16,16 @@ module Wonki
     
     def build_response(path)
       path = "/home" if path == "/"
-      builder = Wonki::PageBuilder.new(@repo_path)
+      storage = Wonki::Storage.new(@repo_path)
             
       headers = {"Content-Type" => "text/html", "Content-Language" => "en"}
       
       begin
-	git_data = builder.build(path)
-	response_body = git_data[:content]
+	git_data = storage.build(path)
+	response_body = format_data(git_data)
 	headers["Last-Modified"] = git_data[:last_modified].httpdate
 	headers["Etag"] = Digest::MD5.hexdigest(git_data[:content])
-	headers["Cache-Control"] = set_cache_control
+	headers = set_cache_control headers
 	status = 200
       rescue Wonki::PageNotFound
 	response_body = "Page Not Found"
@@ -37,9 +38,26 @@ module Wonki
       [status, headers, response_body] 
     end
     
-    def set_cache_control
-      return "max-age=#{@max_age}, public" if @max_age
-      "public"
+    def format_data data
+      %Q{<h2 id="location">#{data[:route_name]}</h2><div id="content">#{Flannel.quilt(data[:content])}</div>}
+    end
+    
+    def set_cache_control headers
+      return headers unless @cache_control
+      
+      if @cache_control[:max_age]
+	if @cache_control[:response_directive]
+	  headers["Cache-Control"] = "max-age=#{@cache_control[:max_age]}, #{@cache_control[:response_directive]}"
+	else
+	  headers["Cache-Control"] = "max-age=#{@cache_control[:max_age]}"
+	end
+      else
+	if @cache_control[:response_directive]
+	  headers["Cache-Control"] = @cache_control[:response_directive]
+	end
+      end
+  
+      headers
     end
   end   
 end

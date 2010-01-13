@@ -7,4 +7,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'wonki'
 
 class Test::Unit::TestCase
+  def assert_false assertion
+    assert !assertion
+  end
 end
