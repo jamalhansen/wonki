@@ -39,21 +39,21 @@ class WikiPageTest < Test::Unit::TestCase
     end
     
     should "set max age" do
-      page = Wonki::WikiPage.new("~/working/rubyyot-wiki-test", :max_age => 300)
+      page = Wonki::WikiPage.new("~/working/rubyyot-wiki-test", nil, :max_age => 300)
       status, headers, body = page.build_response("/foo")
       
       assert_equal("max-age=300", headers["Cache-Control"])
     end
     
     should "set response directive" do
-      page = Wonki::WikiPage.new("~/working/rubyyot-wiki-test", :response_directive => 'public')
+      page = Wonki::WikiPage.new("~/working/rubyyot-wiki-test", nil, :response_directive => 'public')
       status, headers, body = page.build_response("/foo")
       
       assert_equal("public", headers["Cache-Control"])
     end
     
     should "set both response directive and max_age when passed" do
-      page = Wonki::WikiPage.new("~/working/rubyyot-wiki-test", :response_directive => 'public', :max_age => 20)
+      page = Wonki::WikiPage.new("~/working/rubyyot-wiki-test", nil, :response_directive => 'public', :max_age => 20)
       status, headers, body = page.build_response("/foo")
       
       assert_equal("max-age=20, public", headers["Cache-Control"])

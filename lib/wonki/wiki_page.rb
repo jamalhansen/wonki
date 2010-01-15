@@ -1,12 +1,14 @@
 require 'wonki/storage'
 require 'wonki/page_not_found'
 require 'flannel'
+require 'flannel/file_cache'
 
 module Wonki
   class WikiPage
-    def initialize(repo_path, cache_control=nil)
+    def initialize(repo_path, flannel_cache=nil, cache_control=nil)
       @cache_control = cache_control
       @repo_path = repo_path
+      @flannel_cache = Flannel::FileCache.new(flannel_cache) if flannel_cache
     end
     
     def call(env)
@@ -39,7 +41,13 @@ module Wonki
     end
     
     def format_data data
-      %Q{<h2 id="location">#{data[:route_name]}</h2><div id="content">#{Flannel.quilt(data[:content])}</div>}
+      if @flannel_cache
+	output = Flannel.quilt(data[:content], :cache => @flannel_cache)
+      else
+	output = Flannel.quilt(data[:content])
+      end
+      
+      %Q{<h2 id="location">#{data[:route_name]}</h2><div id="content">#{output}</div>}
     end
     
     def set_cache_control headers
