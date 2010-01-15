@@ -8,7 +8,7 @@ module Wonki
     def initialize(repo_path, flannel_cache=nil, cache_control=nil)
       @cache_control = cache_control
       @repo_path = repo_path
-      @flannel_cache = Flannel::FileCache.new(flannel_cache) if flannel_cache
+      @flannel_cache = Flannel::FileCache.new(File.expand_path(flannel_cache)) if flannel_cache
     end
     
     def call(env)
