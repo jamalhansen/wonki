@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{wonki}
-  s.version = "0.0.8"
+  s.version = "0.0.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["rubyyot"]
-  s.date = %q{2010-01-14}
+  s.date = %q{2010-02-09}
   s.description = %q{a Rack and Git based wiki like thing}
   s.email = %q{jamal.hansen@gmail.com}
   s.extra_rdoc_files = [
