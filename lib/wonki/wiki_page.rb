@@ -24,16 +24,16 @@ module Wonki
       
       begin
 	git_data = storage.build(path)
-	response_body = format_data(git_data)
+	response_body = [format_data(git_data)]
 	headers["Last-Modified"] = git_data[:last_modified].httpdate
 	headers["Etag"] = Digest::MD5.hexdigest(git_data[:content])
 	headers = set_cache_control headers
 	status = 200
       rescue Wonki::PageNotFound
-	response_body = "Page Not Found"
+	response_body = ["Page Not Found"]
 	status = 404
       rescue RuntimeError => e
-	response_body = "Server Error: #{e.message}\r\n#{e.stack_trace}"
+	response_body = ["Server Error: #{e.message}\r\n#{e.stack_trace}"]
 	status = 500
       end
       
