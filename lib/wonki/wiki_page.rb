@@ -10,18 +10,18 @@ module Wonki
       @repo_path = repo_path
       @flannel_cache = Flannel::FileCache.new(File.expand_path(flannel_cache)) if flannel_cache
     end
-    
+
     def call(env)
       req = Rack::Request.new(env)
       build_response(req.path)
-    end 
-    
+    end
+
     def build_response(path)
       path = "/home" if path == "/"
       storage = Wonki::Storage.new(@repo_path)
-            
-      headers = {"Content-Type" => "text/html", "Content-Language" => "en"}
-      
+
+      headers = {"Content-Type" => "text/html; charset=utf-8", "Content-Language" => "en"}
+
       begin
         git_data = storage.build(path)
         response_body = [format_data(git_data)]
@@ -36,23 +36,23 @@ module Wonki
         response_body = ["Server Error: #{e.message}\r\n#{e.stack_trace}"]
         status = 500
       end
-      
-      [status, headers, response_body] 
+
+      [status, headers, response_body]
     end
-    
+
     def format_data data
       if @flannel_cache
         output = Flannel.quilt(data[:content], :cache => @flannel_cache)
       else
         output = Flannel.quilt(data[:content])
       end
-      
+
       %Q{<h2 id="location">#{data[:route_name]}</h2><div id="content">#{output}</div>}
     end
-    
+
     def set_cache_control headers
       return headers unless @cache_control
-      
+
       if @cache_control[:max_age]
         if @cache_control[:response_directive]
           headers["Cache-Control"] = "max-age=#{@cache_control[:max_age]}, #{@cache_control[:response_directive]}"
@@ -64,8 +64,8 @@ module Wonki
           headers["Cache-Control"] = @cache_control[:response_directive]
         end
       end
-  
+
       headers
     end
-  end   
+  end
 end
