@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["rubyyot"]
-  s.date = %q{2010-02-28}
+  s.date = %q{2010-03-01}
   s.description = %q{a Rack and Git based wiki like thing}
   s.email = %q{jamal.hansen@gmail.com}
   s.extra_rdoc_files = [
