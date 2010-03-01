@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 require 'helper'
 require 'lib/wonki/wiki_page'
 
