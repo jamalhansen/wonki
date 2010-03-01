@@ -11,7 +11,7 @@ begin
     gem.homepage = "http://github.com/rubyyot/wonki"
     gem.authors = ["rubyyot"]
     gem.add_dependency 'grit'
-    gem.add_dependency 'flannel', '>= 0.2.1'
+    gem.add_dependency 'flannel', '>= 0.2.11'
     gem.add_development_dependency 'shoulda', '>= 2.10.2'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
